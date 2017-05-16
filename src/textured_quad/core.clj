@@ -31,29 +31,29 @@
               box (.createBox (ModelBuilder.)
                               1 1 0.6519
                               (Material. (into-array [(TextureAttribute/createDiffuse @tex)]))
-                              (bit-or VertexAttributes$Usage/Position VertexAttributes$Usage/Normal VertexAttributes$Usage/TextureCoordinates))]
+                              (bit-or VertexAttributes$Usage/Position VertexAttributes$Usage/Normal VertexAttributes$Usage/TextureCoordinates))
+
+              m [[1 1 1 1 1 1 1 1 1 1]
+                   [1 1 1 0 1 0 0 1 1 1]
+                   [1 1 1 0 1 0 0 1 1 1]
+                   [1 0 0 0 0 0 1 1 1 1]
+                   [1 1 1 0 0 0 0 0 0 1]
+                   [1 1 1 0 0 0 0 0 1 1]
+                   [1 1 1 0 0 0 0 1 1 1]
+                   [1 1 1 1 0 1 1 1 1 1]
+                   [1 1 1 0 0 0 1 1 1 1]
+                   [1 1 1 1 1 1 1 1 1 1]]]
           (reset! environment (doto (Environment.)
                                 (.set (ColorAttribute. ColorAttribute/AmbientLight 0.8 0.8 0.8 1.0))))
 
           ;; todo change this to map
-          (reset! model-instances [(ModelInstance. box -1.0 1.0 0.35)
-                                   (ModelInstance. box 1.0 1.0 0.35)
-                                   (ModelInstance. box -1.0 2.0 0.35)
-                                   (ModelInstance. box 0.0 -2.0 0.35)
-                                   (ModelInstance. box 0.0 2.0 0.35)
-                                   (ModelInstance. box -1.0 -2.0 0.35)
-
-                                   (ModelInstance. box -6.0 -4.0 0.35)
-                                   (ModelInstance. box -5.0 -4.0 0.35)
-                                   (ModelInstance. box -4.0 -3.0 0.35)
-                                   (ModelInstance. box -4.0 -2.0 0.35)
-                                   (ModelInstance. box -4.0 -1.0 0.35)
-                                   (ModelInstance. box -4.0 0.0 0.35)
-                                   (ModelInstance. box -4.0 1.0 0.35)
-                                   (ModelInstance. box 1.0 -2.0 0.35)
-                                   (ModelInstance. box 2.0 -2.0 0.35)
-                                   (ModelInstance. box 2.0 -1.0 0.35)
-                                   (ModelInstance. box 2.0 0.0 0.35)])
+          (reset! model-instances
+                  (for [[row y] (map vector m (range))
+                        [wall? x] (map vector row (range))
+                        :when (= 1 wall?)]
+                    (do
+                      
+                      (ModelInstance. box (float (- x 5)) (float (- y 5)) 0.35))))
           (reset! model-batch (ModelBatch.))
           ) 
         nil)

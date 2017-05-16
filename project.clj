@@ -7,5 +7,4 @@
                  [com.badlogicgames.gdx/gdx "1.9.3"]
                  [com.badlogicgames.gdx/gdx-backend-lwjgl "1.9.3"]
                  [com.badlogicgames.gdx/gdx-platform "1.9.3" :classifier "natives-desktop"]]
-  :main textured-quad.core
-  :aot [textured-quad.application.App])
+  :main textured-quad.core)
